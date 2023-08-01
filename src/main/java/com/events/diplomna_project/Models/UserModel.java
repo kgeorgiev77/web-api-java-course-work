@@ -2,6 +2,8 @@ package com.events.diplomna_project.Models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class UserModel {
@@ -19,10 +21,21 @@ public class UserModel {
     private String phone;
     private String role;
 
+    public List<BadgeModel> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<BadgeModel> badges) {
+        this.badges = badges;
+    }
+
+    @OneToMany(mappedBy = "user")
+    private List<BadgeModel> badges;
+
     public UserModel() {
     }
 
-    public UserModel(Long id, int age, String description, String email, boolean is_admin, String name, String password, String phone, String role) {
+    public UserModel(Long id, int age, String description, String email, boolean is_admin, String name, String password, String phone, String role, List<BadgeModel> b) {
         this.id = id;
         this.age = age;
         this.description = description;
@@ -32,6 +45,7 @@ public class UserModel {
         this.password = password;
         this.phone = phone;
         this.role = role;
+        this.badges = b;
     }
 
     public Long getId() {

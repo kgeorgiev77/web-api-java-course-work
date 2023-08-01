@@ -2,6 +2,9 @@ package com.events.diplomna_project.Models;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table(name = "events")
 
@@ -11,7 +14,7 @@ public class EventModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int age;
+    private Date date;
     private String description;
     private String donation;
     private String goal;
@@ -21,18 +24,30 @@ public class EventModel {
     @ManyToOne
     private  OrganizationModel organisation_id;
 
+    @OneToMany(mappedBy = "event")
+    private List<BadgeModel> badges;
+
+    public List<BadgeModel> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<BadgeModel> badges) {
+        this.badges = badges;
+    }
+
     public EventModel() {
     }
 
-    public EventModel(Long id, int age, String description, String donation, String goal, String name, boolean is_confirmed_by_admin, OrganizationModel organisation_id) {
+    public EventModel(Long id, Date date, String description, String donation, String goal, String name, boolean is_confirmed_by_admin, OrganizationModel organisation_id, List<BadgeModel> b) {
         this.id = id;
-        this.age = age;
+        this.date = date;
         this.description = description;
         this.donation = donation;
         this.goal = goal;
         this.name = name;
         this.is_confirmed_by_admin = is_confirmed_by_admin;
         this.organisation_id = organisation_id;
+        this.badges = b;
     }
 
     public Long getId() {
@@ -43,12 +58,12 @@ public class EventModel {
         this.id = id;
     }
 
-    public int getAge() {
-        return age;
+    public Date getDate() {
+        return date;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getDescription() {

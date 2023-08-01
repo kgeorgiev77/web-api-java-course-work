@@ -16,10 +16,12 @@ public class BadgeModel {
     private String message;
 
     @ManyToOne
-    private UserModel user_id;
+    @JoinColumn(name = "user_id")
+    private UserModel user;
 
     @ManyToOne
-    private EventModel event_id;
+    @JoinColumn(name = "event_id")
+    private EventModel event;
 
     public BadgeModel() {
     }
@@ -27,8 +29,8 @@ public class BadgeModel {
     public BadgeModel(Long id, String message, UserModel user_id, EventModel event_id) {
         this.id = id;
         this.message = message;
-        this.user_id = user_id;
-        this.event_id = event_id;
+        this.user = user_id;
+        this.event = event_id;
     }
 
     public Long getId() {
@@ -48,18 +50,18 @@ public class BadgeModel {
     }
 
     public UserModel getUser_id() {
-        return user_id;
+        return user;
     }
 
     public void setUser_id(UserModel user_id) {
-        this.user_id = user_id;
+        this.user = user_id;
     }
 
     public EventModel getEvent_id() {
-        return event_id;
+        return event;
     }
 
     public void setEvent_id(EventModel event_id) {
-        this.event_id = event_id;
+        this.event = event_id;
     }
 }

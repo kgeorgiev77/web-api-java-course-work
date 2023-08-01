@@ -57,6 +57,13 @@ public class UserController {
             if (existingUser.isPresent()) {
                 UserModel userUpdated = existingUser.get();
                 userUpdated.setName(updatedUser.getName());
+                userUpdated.setAge(updatedUser.getAge());
+                userUpdated.setDescription(updatedUser.getDescription());
+                userUpdated.setEmail(updatedUser.getEmail());
+                userUpdated.setPassword(updatedUser.getPassword());
+                userUpdated.setPhone(updatedUser.getPhone());
+                userUpdated.setRole(updatedUser.getRole());
+                userUpdated.setBadges(updatedUser.getBadges());
                 return ResponseEntity.ok("User updated successfully");
             } else {
                 return ResponseEntity.notFound().build();
