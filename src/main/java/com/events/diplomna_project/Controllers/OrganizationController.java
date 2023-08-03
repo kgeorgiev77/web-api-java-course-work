@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/organizations")
+@RequestMapping
 public class OrganizationController {
     private final OrganizationRepository organizationRepository;
 
@@ -18,12 +18,12 @@ public class OrganizationController {
         organizationRepository = organizationRepo;
     }
 
-    @GetMapping
+    @GetMapping("/organizations")
     public List<OrganizationModel> getAllOrganizations(){
         return organizationRepository.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/organizations")
     public ResponseEntity<String> createOrganization(@RequestBody OrganizationModel organization){
         try {
             organizationRepository.save(organization);

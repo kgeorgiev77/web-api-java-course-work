@@ -2,6 +2,8 @@ package com.events.diplomna_project.Models;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,10 +19,12 @@ public class BadgeModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserModel user;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
+    @JsonBackReference
     private EventModel event;
 
     public BadgeModel() {

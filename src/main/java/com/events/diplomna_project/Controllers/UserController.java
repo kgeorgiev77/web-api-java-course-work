@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping
 public class UserController {
 
     private final UserRepository userRepository;
@@ -19,12 +19,12 @@ public class UserController {
         userRepository = userRepo;
     }
 
-    @GetMapping
+    @GetMapping(value="/users")
     public List <UserModel> getAllUsers(){
         return userRepository.findAll();
     }
 
-    @PostMapping
+    @PostMapping(value="/users")
     public ResponseEntity<String> createUser(@RequestBody UserModel user){
         try {
             userRepository.save(user);
@@ -34,7 +34,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping(value = "/users/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         // Check if the user with the given id exists in the database
         try{
@@ -50,7 +50,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping(value = "/users/{id}")
     public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserModel updatedUser) {
         try{
             Optional<UserModel> existingUser = userRepository.findById(id);

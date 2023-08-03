@@ -1,5 +1,6 @@
 package com.events.diplomna_project.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,15 +22,8 @@ public class UserModel {
     private String phone;
     private String role;
 
-    public List<BadgeModel> getBadges() {
-        return badges;
-    }
-
-    public void setBadges(List<BadgeModel> badges) {
-        this.badges = badges;
-    }
-
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<BadgeModel> badges;
 
     public UserModel() {
@@ -48,6 +42,13 @@ public class UserModel {
         this.badges = b;
     }
 
+    public List<BadgeModel> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(List<BadgeModel> badges) {
+        this.badges = badges;
+    }
     public Long getId() {
         return id;
     }

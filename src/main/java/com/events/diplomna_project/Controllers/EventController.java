@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/events")
+@RequestMapping
 public class EventController {
     private final EventRepository eventRepository;
 
@@ -17,12 +17,12 @@ public class EventController {
         eventRepository = eventRepo;
     }
 
-    @GetMapping
+    @GetMapping("/events")
     public List<EventModel> getAllEvents(){
         return eventRepository.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/events")
     public ResponseEntity<String> createEvent(@RequestBody EventModel event){
         try {
             eventRepository.save(event);

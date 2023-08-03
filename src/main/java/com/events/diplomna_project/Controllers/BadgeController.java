@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/badges")
+@RequestMapping
 public class BadgeController {
     private final BadgeRepository badgeRepository;
 
@@ -18,12 +18,12 @@ public class BadgeController {
         badgeRepository = badgeRepo;
     }
 
-    @GetMapping
+    @GetMapping("/badges")
     public List<BadgeModel> getAllBadges(){
         return badgeRepository.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/badges")
     public ResponseEntity<String> createBadge(@RequestBody BadgeModel badge){
         try {
             badgeRepository.save(badge);
