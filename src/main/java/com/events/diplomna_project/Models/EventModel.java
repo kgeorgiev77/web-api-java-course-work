@@ -1,5 +1,6 @@
 package com.events.diplomna_project.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -26,7 +27,7 @@ public class EventModel {
     private  OrganizationModel organisation_id;
 
     @OneToMany(mappedBy = "event")
-    @JsonManagedReference
+    @JsonIgnore
     private List<BadgeModel> badges;
 
     public List<BadgeModel> getBadges() {

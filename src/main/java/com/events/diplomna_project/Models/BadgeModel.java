@@ -19,12 +19,10 @@ public class BadgeModel {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private UserModel user;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
-    @JsonBackReference
     private EventModel event;
 
     public BadgeModel() {

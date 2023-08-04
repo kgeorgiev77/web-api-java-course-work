@@ -55,15 +55,30 @@ public class UserController {
         try{
             Optional<UserModel> existingUser = userRepository.findById(id);
             if (existingUser.isPresent()) {
+
                 UserModel userUpdated = existingUser.get();
-                userUpdated.setName(updatedUser.getName());
-                userUpdated.setAge(updatedUser.getAge());
-                userUpdated.setDescription(updatedUser.getDescription());
-                userUpdated.setEmail(updatedUser.getEmail());
-                userUpdated.setPassword(updatedUser.getPassword());
-                userUpdated.setPhone(updatedUser.getPhone());
-                userUpdated.setRole(updatedUser.getRole());
-                userUpdated.setBadges(updatedUser.getBadges());
+                if (updatedUser.getName() != null) {
+                    userUpdated.setName(updatedUser.getName());
+                }
+                if (updatedUser.getAge() != 0) {
+                    userUpdated.setAge(updatedUser.getAge());
+                }
+                if (updatedUser.getDescription() != null) {
+                    userUpdated.setDescription(updatedUser.getDescription());
+                }
+                if (updatedUser.getEmail() != null) {
+                    userUpdated.setEmail(updatedUser.getEmail());
+                }
+                if (updatedUser.getPhone() != null) {
+                    userUpdated.setPassword(updatedUser.getPassword());
+                }
+                if (updatedUser.getRole() != null) {
+                    userUpdated.setRole(updatedUser.getRole());
+                }
+                if (updatedUser.getBadges() != null) {
+                    userUpdated.setBadges(updatedUser.getBadges());
+                }
+                userRepository.save(userUpdated);
                 return ResponseEntity.ok("User updated successfully");
             } else {
                 return ResponseEntity.notFound().build();

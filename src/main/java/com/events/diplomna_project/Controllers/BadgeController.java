@@ -54,7 +54,10 @@ public class BadgeController {
             Optional<BadgeModel> existingBadge = badgeRepository.findById(id);
             if (existingBadge.isPresent()) {
                 BadgeModel badgeUpdated = existingBadge.get();
-                badgeUpdated.setMessage(updatedBadge.getMessage());
+                if (updatedBadge.getMessage() != null) {
+                    badgeUpdated.setMessage(updatedBadge.getMessage());
+                }
+                badgeRepository.save(badgeUpdated);
                 return ResponseEntity.ok("Badge updated successfully");
             } else {
                 return ResponseEntity.notFound().build();

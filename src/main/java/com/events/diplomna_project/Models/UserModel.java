@@ -1,5 +1,6 @@
 package com.events.diplomna_project.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -23,7 +24,7 @@ public class UserModel {
     private String role;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @JsonIgnore
     private List<BadgeModel> badges;
 
     public UserModel() {

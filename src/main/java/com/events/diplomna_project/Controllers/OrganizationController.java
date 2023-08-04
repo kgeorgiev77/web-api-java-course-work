@@ -53,10 +53,22 @@ public class OrganizationController {
         try{
             Optional<OrganizationModel> existingOrganization = organizationRepository.findById(id);
             if (existingOrganization.isPresent()) {
+
                 OrganizationModel organizationUpdated = existingOrganization.get();
-                organizationUpdated.setName(updatedOrganization.getName());
-                organizationUpdated.setDescription(updatedOrganization.getDescription());
-                organizationUpdated.setPassword(updatedOrganization.getPassword());
+
+                if (updatedOrganization.getName() != null) {
+                    organizationUpdated.setName(updatedOrganization.getName());
+                }
+                if (updatedOrganization.getDescription() != null) {
+                    organizationUpdated.setDescription(updatedOrganization.getDescription());
+                }
+                if (updatedOrganization.getPassword() != null) {
+                    organizationUpdated.setPassword(updatedOrganization.getPassword());
+                }
+                if (updatedOrganization.getEmail() != null) {
+                    organizationUpdated.setEmail(updatedOrganization.getEmail());
+                }
+                organizationRepository.save(organizationUpdated);
                 return ResponseEntity.ok("Organization updated successfully");
             } else {
                 return ResponseEntity.notFound().build();
@@ -65,5 +77,4 @@ public class OrganizationController {
             return ResponseEntity.ofNullable(e.getMessage());
         }
     }
-
 }

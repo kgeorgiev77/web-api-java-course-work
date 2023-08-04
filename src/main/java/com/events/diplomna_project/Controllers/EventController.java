@@ -53,12 +53,27 @@ public class EventController {
             Optional<EventModel> existingEvent = eventRepository.findById(id);
             if (existingEvent.isPresent()) {
                 EventModel eventUpdated = existingEvent.get();
-                eventUpdated.setName(updatedEvent.getName());
-                eventUpdated.setDescription(updatedEvent.getDescription());
-                eventUpdated.setDate(updatedEvent.getDate());
-                eventUpdated.setDonation(updatedEvent.getDonation());
-                eventUpdated.setGoal(updatedEvent.getGoal());
-                eventUpdated.setBadges(updatedEvent.getBadges());
+
+                if (updatedEvent.getName() != null) {
+                    eventUpdated.setName(updatedEvent.getName());
+                }
+                if (updatedEvent.getDescription() != null) {
+                    eventUpdated.setDescription(updatedEvent.getDescription());
+                }
+                if (updatedEvent.getDate() != null) {
+                    eventUpdated.setDate(updatedEvent.getDate());
+                }
+                if (updatedEvent.getDonation() != null) {
+                    eventUpdated.setDonation(updatedEvent.getDonation());
+                }
+                if (updatedEvent.getGoal() != null) {
+                    eventUpdated.setGoal(updatedEvent.getGoal());
+                }
+                if (updatedEvent.getBadges() != null) {
+                    eventUpdated.setBadges(updatedEvent.getBadges());
+                }
+                eventRepository.save(eventUpdated);
+
                 return ResponseEntity.ok("Event updated successfully");
             } else {
                 return ResponseEntity.notFound().build();
