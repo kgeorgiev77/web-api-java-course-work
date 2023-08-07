@@ -3,7 +3,6 @@ package com.events.diplomna_project.Controllers;
 import com.events.diplomna_project.Models.UserModel;
 import com.events.diplomna_project.Repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
