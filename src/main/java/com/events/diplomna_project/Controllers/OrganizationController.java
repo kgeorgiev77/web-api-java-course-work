@@ -3,6 +3,7 @@ package com.events.diplomna_project.Controllers;
 import com.events.diplomna_project.Models.OrganizationModel;
 import com.events.diplomna_project.Repositories.OrganizationRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class OrganizationController {
         organizationRepository = organizationRepo;
     }
 
+    @PreAuthorize("hasPermission(#user, 'USER', 'ADMIN') or hasPermission(#user, 'USER', 'HOST')")
     @GetMapping("/organizations")
     public List<OrganizationModel> getAllOrganizations(){
         return organizationRepository.findAll();
