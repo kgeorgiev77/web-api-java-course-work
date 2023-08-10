@@ -3,7 +3,6 @@ package com.events.diplomna_project.Controllers;
 import com.events.diplomna_project.Models.UserModel;
 import com.events.diplomna_project.Repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +14,8 @@ public class UserController {
 
     private final UserRepository userRepository;
 
+
+
     public UserController(UserRepository userRepo) {
         userRepository = userRepo;
     }
@@ -22,18 +23,20 @@ public class UserController {
 
     @GetMapping(value="/users")
     public List <UserModel> getAllUsers(){
+
         return userRepository.findAll();
     }
 
     @PostMapping(value="/users")
-    public ResponseEntity<String> createUser(@RequestBody UserModel user){
+    public ResponseEntity<String> createUser(@RequestBody UserModel user) {
         try {
             userRepository.save(user);
             return ResponseEntity.ok("User created successfully");
-        }catch (Exception e){
-            return  ResponseEntity.ofNullable(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.ofNullable(e.getMessage());
         }
     }
+
 
     @DeleteMapping(value = "/users/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
