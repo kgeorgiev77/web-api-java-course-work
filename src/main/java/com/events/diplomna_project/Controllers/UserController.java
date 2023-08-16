@@ -2,7 +2,9 @@ package com.events.diplomna_project.Controllers;
 
 import com.events.diplomna_project.Models.UserModel;
 import com.events.diplomna_project.Repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +18,8 @@ public class UserController {
 
 
 
-    public UserController(UserRepository userRepo) {
-        userRepository = userRepo;
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
 
