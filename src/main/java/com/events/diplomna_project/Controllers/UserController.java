@@ -14,6 +14,8 @@ import java.util.Optional;
 @RequestMapping
 public class UserController {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
 
@@ -32,6 +34,7 @@ public class UserController {
     @PostMapping(value="/users")
     public ResponseEntity<String> createUser(@RequestBody UserModel user) {
         try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return ResponseEntity.ok("User created successfully");
         } catch (Exception e) {

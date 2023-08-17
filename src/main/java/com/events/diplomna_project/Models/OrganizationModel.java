@@ -20,6 +20,11 @@ public class OrganizationModel {
     public OrganizationModel() {
     }
 
+    public OrganizationModel(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     public OrganizationModel(Long id, String description, String email, String name, String password, UserModel user_id) {
         this.id = id;
         this.description = description;

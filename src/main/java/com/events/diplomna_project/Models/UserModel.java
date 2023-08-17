@@ -3,7 +3,10 @@ package com.events.diplomna_project.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -28,6 +31,12 @@ public class UserModel {
     private List<BadgeModel> badges;
 
     public UserModel() {
+    }
+
+    public UserModel(String name, String password, String role) {
+        this.name = name;
+        this.password = password;
+        this.role = role;
     }
 
     public UserModel(Long id, int age, String description, String email, boolean is_admin, String name, String password, String phone, String role, List<BadgeModel> b) {
@@ -97,6 +106,7 @@ public class UserModel {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getPassword() {
         return password;
