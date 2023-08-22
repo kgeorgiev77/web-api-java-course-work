@@ -1,6 +1,9 @@
 package com.events.diplomna_project.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "organisation")
@@ -14,8 +17,25 @@ public class OrganizationModel {
     private String email;
     private String name;
     private String password;
+    private boolean is_proved;
+
+    public OrganizationModel(Long id, String description, String email, String name, String password, boolean is_proved, UserModel user_id, List<EventModel> events) {
+        this.id = id;
+        this.description = description;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.is_proved = is_proved;
+        this.user_id = user_id;
+        this.events = events;
+    }
+
     @ManyToOne
     private UserModel user_id;
+
+    @OneToMany(mappedBy = "organisation_id")
+    @JsonIgnore
+    private List<EventModel> events;
 
     public OrganizationModel() {
     }
@@ -25,13 +45,16 @@ public class OrganizationModel {
         this.password = password;
     }
 
-    public OrganizationModel(Long id, String description, String email, String name, String password, UserModel user_id) {
-        this.id = id;
-        this.description = description;
-        this.email = email;
-        this.name = name;
-        this.password = password;
-        this.user_id = user_id;
+    public boolean isIs_proved() {
+        return is_proved;
+    }
+
+    public void setIs_proved(boolean is_proved) {
+        this.is_proved = is_proved;
+    }
+
+    public List<EventModel> getEvents() {
+        return events;
     }
 
     public Long getId() {

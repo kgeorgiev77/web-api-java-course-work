@@ -24,6 +24,7 @@ public class EventModel {
     private boolean is_confirmed_by_admin;
 
     @ManyToOne
+    @JoinColumn(name = "organisation_id_id")
     private  OrganizationModel organisation_id;
 
     @OneToMany(mappedBy = "event")

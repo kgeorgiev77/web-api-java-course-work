@@ -3,9 +3,9 @@ package com.events.diplomna_project.Models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -21,7 +21,9 @@ public class UserModel {
     private String description;
     private String email;
     private boolean is_admin;
+    @NotNull
     private String name;
+    @NotNull
     private String password;
     private String phone;
     private String role;
