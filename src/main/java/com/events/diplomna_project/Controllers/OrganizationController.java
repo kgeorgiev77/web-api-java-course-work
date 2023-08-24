@@ -26,11 +26,13 @@ public class OrganizationController {
 
 
     @GetMapping("/organizations")
+    @PreAuthorize("hasAnyAuthority('ROLE_ORGANIZATION', 'ROLE_ADMIN')")
     public List<OrganizationModel> getAllOrganizations(){
         return organizationRepository.findAll();
     }
 
     @GetMapping("/organizations/{id}/events")
+    @PreAuthorize("hasAuthority('ROLE_ORGANIZATION')")
     public ResponseEntity<List<EventModel>> getOrganizationEvents(@PathVariable Long id) {
         Optional<OrganizationModel> optionalOrg = organizationRepository.findById(id);
         if (optionalOrg.isPresent()) {
@@ -42,7 +44,8 @@ public class OrganizationController {
         }
     }
 
-    @PostMapping("/organizations")
+    @PostMapping("/organizations/register")
+    @PreAuthorize("hasAnyAuthority('ROLE_ORGANIZATION', 'ROLE_ADMIN')")
     public ResponseEntity<String> createOrganization(@RequestBody OrganizationModel organization){
         try {
             organizationRepository.save(organization);
@@ -74,6 +77,7 @@ public class OrganizationController {
     }
 
     @DeleteMapping("/organizations/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ORGANIZATION', 'ROLE_ADMIN')")
     public ResponseEntity<String> deleteOrganization(@PathVariable Long id) {
         try{
             if (organizationRepository.existsById(id)) {
@@ -88,13 +92,28 @@ public class OrganizationController {
         }
     }
 
+    @GetMapping("organizations/search")
+    @PreAuthorize("hasAnyAuthority('ROLE_ORGANIZATIONS','ROLE_ADMIN','ROLE_VOLUNTEER')")
+    public ResponseEntity<Optional<OrganizationModel>> searchOrganizationsByName(@RequestParam String name) {
+        Optional<OrganizationModel>  foundOrganizations = organizationRepository.findByName(name);
+        return ResponseEntity.ok(foundOrganizations);
+    }
+
     @PutMapping("/organizations/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ORGANIZATION', 'ROLE_ADMIN')")
     public ResponseEntity<String> updateOrganization(@PathVariable Long id, @RequestBody OrganizationModel updatedOrganization) {
         try{
+
             Optional<OrganizationModel> existingOrganization = organizationRepository.findById(id);
             if (existingOrganization.isPresent()) {
 
                 OrganizationModel organizationUpdated = existingOrganization.get();
+
+                String loggedInUserEmail =organizationUpdated.getEmail();
+
+                if (!loggedInUserEmail.equals(updatedOrganization.getEmail())) {
+                    return ResponseEntity.badRequest().body("You can only get your own profile's info");
+                }
 
                 if (updatedOrganization.getName() != null) {
                     organizationUpdated.setName(updatedOrganization.getName());

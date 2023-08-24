@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,6 +33,10 @@ public class UserModel {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<BadgeModel> badges;
+
+    @ManyToMany(mappedBy = "volunteers")
+    private List<EventModel> events = new ArrayList<>();
+
 
     public UserModel() {
     }
@@ -133,4 +139,13 @@ public class UserModel {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public List<EventModel> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<EventModel> events) {
+        this.events = events;
+    }
+
 }

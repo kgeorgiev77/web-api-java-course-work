@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class EventModel {
     @OneToMany(mappedBy = "event")
     @JsonIgnore
     private List<BadgeModel> badges;
+
+    @ManyToMany
+    private List<UserModel> volunteers = new ArrayList<>();
 
     public List<BadgeModel> getBadges() {
         return badges;
@@ -116,5 +120,13 @@ public class EventModel {
 
     public void setOrganisation_id(OrganizationModel organisation_id) {
         this.organisation_id = organisation_id;
+    }
+
+    public List<UserModel> getVolunteers() {
+        return volunteers;
+    }
+
+    public void setVolunteers(List<UserModel> volunteers) {
+        this.volunteers = volunteers;
     }
 }

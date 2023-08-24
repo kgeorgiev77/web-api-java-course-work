@@ -4,6 +4,7 @@ package com.events.diplomna_project.Controllers;
 import com.events.diplomna_project.Models.BadgeModel;
 import com.events.diplomna_project.Repositories.BadgeRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,11 +20,13 @@ public class BadgeController {
     }
 
     @GetMapping("/badges")
+    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
     public List<BadgeModel> getAllBadges(){
         return badgeRepository.findAll();
     }
 
     @PostMapping("/badges")
+    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
     public ResponseEntity<String> createBadge(@RequestBody BadgeModel badge){
         try {
             badgeRepository.save(badge);
@@ -34,6 +37,7 @@ public class BadgeController {
     }
 
     @DeleteMapping("/badges/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
     public ResponseEntity<String> deleteBadge(@PathVariable Long id) {
         try{
             if (badgeRepository.existsById(id)) {
@@ -49,6 +53,7 @@ public class BadgeController {
     }
 
     @PutMapping("/badges/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
     public ResponseEntity<String> updateBadge(@PathVariable Long id, @RequestBody BadgeModel updatedBadge) {
         try{
             Optional<BadgeModel> existingBadge = badgeRepository.findById(id);

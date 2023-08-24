@@ -1,8 +1,10 @@
 package com.events.diplomna_project.Controllers;
 
 import com.events.diplomna_project.Models.EventModel;
+import com.events.diplomna_project.Models.UserModel;
 import com.events.diplomna_project.Repositories.EventRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +20,13 @@ public class EventController {
     }
 
     @GetMapping("/events")
+    @PreAuthorize("hasAnyAuthority('ROLE_ORGANIZATION','ROLE_HOST', 'ROLE_ADMIN')")
     public List<EventModel> getAllEvents(){
         return eventRepository.findAll();
     }
 
     @PostMapping("/events")
+    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
     public ResponseEntity<String> createEvent(@RequestBody EventModel event){
         try {
             eventRepository.save(event);
@@ -31,8 +35,29 @@ public class EventController {
             return  ResponseEntity.ofNullable(e.getMessage());
         }
     }
+    @GetMapping("events/search")
+    @PreAuthorize("hasAnyAuthority('ROLE_ORGANIZATIONS','ROLE_ADMIN','ROLE_VOLUNTEER')")
+    public ResponseEntity<Optional<EventModel>> searchEventsByName(@RequestParam String name) {
+        Optional<EventModel> foundEvents = eventRepository.findByName(name);
+        return ResponseEntity.ok(foundEvents);
+    }
+    @GetMapping("/events/{eventId}/volunteers")
+    @PreAuthorize("hasAnyAuthority('ROLE_ORGANIZATION','ROLE_HOST', 'ROLE_ADMIN')")
+    public ResponseEntity<List<UserModel>> getEventVolunteers(@PathVariable Long eventId) {
+        Optional<EventModel> optionalEvent = eventRepository.findById(eventId);
+
+        if (optionalEvent.isPresent()) {
+            EventModel event = optionalEvent.get();
+            List<UserModel> volunteers = event.getVolunteers();
+            return ResponseEntity.ok(volunteers);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @DeleteMapping("/events/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
     public ResponseEntity<String> deleteOrganization(@PathVariable Long id) {
         try{
             if (eventRepository.existsById(id)) {
@@ -48,6 +73,7 @@ public class EventController {
     }
 
     @PutMapping("/events/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
     public ResponseEntity<String> updateEvent(@PathVariable Long id, @RequestBody EventModel updatedEvent) {
         try{
             Optional<EventModel> existingEvent = eventRepository.findById(id);
