@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations())).permitAll() // Allow static resources
                         .requestMatchers("/organizations/{organizationId}/approve").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers("/organizations/search", "events/search").hasAnyAuthority("ROLE_ORGANIZATIONS","ROLE_ADMIN","ROLE_VOLUNTEER")
+                        .requestMatchers("/organizations/search", "events/search", "/events").hasAnyAuthority("ROLE_ORGANIZATIONS","ROLE_ADMIN","ROLE_VOLUNTEER"," ROLE_HOST")
                         .requestMatchers("/organizations","/organizations/{id}/events","/organizations/register","/organizations/{id}").hasAnyAuthority("ROLE_ADMIN","ROLE_ORGANIZATIONS") // Admin can access users and organizations
                         .requestMatchers( "/events","/users/{userId}/badges/{badgeId}", "/events/{eventId}/volunteers").hasAnyAuthority("ROLE_HOST", "ROLE_ORGANIZATION","ROLE_ADMIN") // Host and Organization can access events and badges
                         .requestMatchers( "/users","/users/{id}","/users/me","/users/register","/users/search","/users/{userId}/events").hasAnyAuthority("ROLE_VOLUNTEER","ROLE_ADMIN")

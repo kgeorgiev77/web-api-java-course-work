@@ -20,13 +20,13 @@ public class BadgeController {
     }
 
     @GetMapping("/badges")
-    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
+    //'ROLE_HOST ','ROLE_ADMIN'
     public List<BadgeModel> getAllBadges(){
         return badgeRepository.findAll();
     }
 
     @PostMapping("/badges")
-    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
+    //'ROLE_HOST ','ROLE_ADMIN'
     public ResponseEntity<String> createBadge(@RequestBody BadgeModel badge){
         try {
             badgeRepository.save(badge);
@@ -37,7 +37,7 @@ public class BadgeController {
     }
 
     @DeleteMapping("/badges/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
+    //'ROLE_HOST ','ROLE_ADMIN'
     public ResponseEntity<String> deleteBadge(@PathVariable Long id) {
         try{
             if (badgeRepository.existsById(id)) {
@@ -53,7 +53,7 @@ public class BadgeController {
     }
 
     @PutMapping("/badges/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_HOST ','ROLE_ADMIN')")
+    //'ROLE_HOST ','ROLE_ADMIN'
     public ResponseEntity<String> updateBadge(@PathVariable Long id, @RequestBody BadgeModel updatedBadge) {
         try{
             Optional<BadgeModel> existingBadge = badgeRepository.findById(id);
